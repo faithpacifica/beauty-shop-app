@@ -7,12 +7,3 @@ const config = {
 };
 
 export default config;
-
-
-// module.exports = {
-//   plugins: {
-//     // Example: adding Tailwind CSS and Autoprefixer
-//     tailwindcss: {},
-//     autoprefixer: {},
-//   },
-// }

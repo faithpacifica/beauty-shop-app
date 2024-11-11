@@ -12,23 +12,12 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase and Firestore
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-console.log(getApp,"getApp");
-const firestore = getFirestore(app);
-const database = getDatabase(app);  // Initialize Realtime Database
+// const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+// const firestore = getFirestore(app);
+// const database = getDatabase(app);  // Initialize Realtime Database
 
-export { firestore,database };
+// export { firestore,database };
 
-
-
-// Your web app's Firebase configuration
-// const firebaseConfig = {
-//     apiKey: "AIzaSyCQ-5YDyq6AqmKB0qQbzF1jPvU4l_gi6Zo",
-//     authDomain: "beauty-shop-91c90.firebaseapp.com",
-//     databaseURL: "https://beauty-shop-91c90-default-rtdb.firebaseio.com",
-//     projectId: "beauty-shop-91c90",
-//     storageBucket: "beauty-shop-91c90.appspot.com",
-//     messagingSenderId: "950575609160",
-//     appId: "1:950575609160:web:99ab0cb8174865e1c06f7d"
-// };
+const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
 

@@ -2,20 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  /* --background: ; */
-  /* --foreground: ; */
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.container {
+	max-width: 1300px;
+  width:100%;
+	margin: 0 auto;
+	padding-left: 30px;
+	padding-right: 30px;
+
+}
+
+.hero-section{
+/* background-image:url('../../public/assets/images/hero-bg.jpg') */
 }

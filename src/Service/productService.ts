@@ -1,61 +1,51 @@
-// src/Service/productService.ts
-import { database } from '../firebase';  // Import the database instance
-import { ref, get } from 'firebase/database';
+// fetchProducts.ts
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebase';
 
-// Define the Product type
-export type Product = {
-    id: string;
-    discount: number;
-    image: string;
-    price: number;
+export interface Product {
+  discount: number;
+  gender: string;
+  image: string;
+  price: number;
+  title: string;
+}
+
+export const fetchProducts = async (): Promise<Product[]> => {
+  const productsCollection = collection(db, 'products'); // Change "products" if your collection name is different
+  const productSnapshot = await getDocs(productsCollection);
+  const products = productSnapshot.docs.map((doc) => doc.data() as Product);
+  return products;
 };
 
-export const fetchProductsFromDatabase = async (): Promise<Product[]> => {
-    const productsRef = ref(database, 'Products');  // Points to the Products node
-    const snapshot = await get(productsRef);
+// import { database } from '../firebase'; // Import the database instance
+// import { ref, get } from 'firebase/database';
 
-    if (!snapshot.exists()) {
-        return [];
-    }
-
-    const productsData = snapshot.val();
-
-    // Convert the object into an array of Product items
-    const productList = Object.keys(productsData).map((key) => ({
-        id: key,
-        ...productsData[key],
-    })) as Product[];
-
-    return productList;
-};
-
-
-
-
-
-
-
-
-
-// import { firestore } from '../firebase';
-// import { collection, getDocs } from 'firebase/firestore';
-
-// // Define Product type
-// export interface Product {
+// // Define the Product type
+// export type Product = {
+//   name: string;
 //   id: number;
-//   title: string;
 //   discount: number;
+//   image: string;
 //   price: number;
-//   imageUrl: string;
-// }
+//   gender:string;
+//   category:string;
+// };
 
-// // Fetch products from Firestore
-// export const fetchProducts = async (): Promise<Product[]> => {
-//   const productsCollection = collection(firestore, 'products');
-//   const productSnapshot = await getDocs(productsCollection);
-//   const productList = productSnapshot.docs.map((doc) => ({
-//     id: doc.id,
-//     ...doc.data(),
+// export const fetchProductsFromDatabase = async (): Promise<Product[]> => {
+//   const productsRef = ref(database, 'Products'); // Points to the Products node
+//   const snapshot = await get(productsRef);
+
+//   if (!snapshot.exists()) {
+//     return [];
+//   }
+
+//   const productsData = snapshot.val();
+//   // console.log(productsData, 'product datam');
+//   // Convert the object into an array of Product items
+//   const productList = Object.keys(productsData).map((key) => ({
+//     id: key,
+//     ...productsData[key],
 //   })) as Product[];
+
 //   return productList;
 // };
