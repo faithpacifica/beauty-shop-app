@@ -1,10 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import logo from '../../../public/assets/images/logo.png';
-import user from '../../../public/assets/svg/user.svg';
-import like from '../../../public/assets/svg/like.svg';
-import basket from '../../../public/assets/svg/basket.svg';
+import logo from '/public/assets/images/logo.png';
+import user from '/public/assets/svg/user.svg';
+import like from '/public/assets/svg/like.svg';
+import basket from '/public/assets/svg/basket.svg';
 
 const Navbar: React.FC = () => {
   return (

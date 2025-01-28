@@ -1,27 +1,39 @@
-// src/components/SignIn.tsx
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { auth } from '@/app/firebase';
+import { useRouter } from 'next/navigation';
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignIn = (e: React.FormEvent) => {
+  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
+  const router = useRouter();
+
+  const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Add your sign-in logic here
+    try {
+      const res = await signInWithEmailAndPassword(email, password);
+      console.log(res);
+      // sessionStorage.setItem('user', true);
+      setEmail('');
+      setPassword('');
+      router.push('/');
+    } catch (error) {
+      console.error(error, 'error');
+    }
   };
 
   return (
-    // <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-background p-4">
-    <div className="max-w-md w-full bg-white max-w-[700px] dark:bg-gray-800 p-10 rounded-lg shadow-lg">
+    <div className="max-w-md w-full bg-white dark:bg-gray-800 p-10 rounded-lg shadow-lg">
       <h2 className="text-center text-3xl font-bold text-gray-800 dark:text-foreground mb-6">
         Welcome Back
       </h2>
 
       {/* Gmail Button */}
       <button className="w-full py-3 mb-6 bg-[#23856D] text-white font-medium rounded-md hover:bg-[#1d704b] flex items-center justify-center space-x-2">
-        {/* TODO:SVG qanday olib utiladi? */}
         <svg
           width="25"
           height="25"
@@ -61,6 +73,23 @@ const SignIn: React.FC = () => {
             placeholder="example@gmail.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="password"
+            className="block text-sm font-medium text-gray-700 dark:text-foreground mb-1"
+          >
+            Password *
+          </label>
+          <input
+            type="password"
+            id="password"
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md text-gray-700 dark:text-foreground bg-gray-50 dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#23856D]"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
         </div>
