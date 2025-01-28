@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { auth } from '@/app/firebase';
 import { useRouter } from 'next/navigation';
 import { signUpSuccess, signUpFailure } from '../store/Slices/authSlice';
+import ReusableInput from '@/common/UI/ReusableInput';
 
 const SignUp: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -41,7 +42,7 @@ const SignUp: React.FC = () => {
       // Dispatch failure action
       dispatch(signUpFailure(errorMsg));
     }
-   
+
   };
 
   return (
@@ -53,67 +54,41 @@ const SignUp: React.FC = () => {
         Try everything free for 30 days, no payment details required
       </p>
 
+{/* TODO:bu error message ni uchirib tashlash toastify quyish */}
       {errorMessage && (
         <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
       )}
 
       <form onSubmit={handleSignUp}>
-        <div className="mb-4">
-          <label
-            htmlFor="name"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Name *
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Full Name *"
-            required
-            className="w-full px-4 py-2 mt-1 border !bg-[#F9F9F9] border-gray-300 rounded-md focus:ring-[#23856D] focus:border-[#23856D]"
-          />
-        </div>
+        <ReusableInput
+          label="Name *"
+          id="name"
+          name="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Full Name *"
+          required={true}
+          className='focus:ring-[#23856D]'
+        />
+        <ReusableInput
+          label="Email Address *"
+          id="email"
+          name="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="example@gmail.com"
+          required={true}
+        />
 
-        <div className="mb-4">
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Email Address *
-          </label>
-          <input
-            value={email}
-            type="email"
-            id="email"
-            onChange={(e) => setEmail(e.target.value)}
-            name="email"
-            placeholder="example@gmail.com"
-            required
-            className="w-full px-4 py-2 mt-1 border !bg-[#F9F9F9] border-gray-300 rounded-md focus:border-[#23856D]"
-          />
-        </div>
-
-        <div className="mb-6">
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Password *
-          </label>
-          <input
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Password"
-            required
-            className="w-full px-4 py-2 mt-1 border !bg-[#F9F9F9] border-gray-300 rounded-md focus:border-[#23856D]"
-          />
-        </div>
+        <ReusableInput
+          label="Password *"
+          id="password"
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          required={true}
+        />
 
         <button
           type="submit"
