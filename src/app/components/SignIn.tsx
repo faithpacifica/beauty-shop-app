@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { auth } from '@/app/firebase';
+import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { auth, googleAuthProvider } from '@/app/firebase';
 import { useRouter } from 'next/navigation';
 import GoogleIcon from './icons/GoogleIcon';
 import ReusableInput from '@/common/UI/ReusableInput';
@@ -10,12 +10,26 @@ import ReusableInput from '@/common/UI/ReusableInput';
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState<string>('');
 
+  const [signInWithGoogle] = useSignInWithGoogle(auth);
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
   const router = useRouter();
 
+  const handleGoogleSignIn = async () => {
+    try {
+      const res = await signInWithGoogle();
+      console.log(res);
+      router.push('/');
+    } catch (error) {
+      console.error(error, 'Google sign-in failed');
+    }
+  };
+
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+
     try {
       const res = await signInWithEmailAndPassword(email, password);
       console.log(res);
@@ -24,6 +38,7 @@ const SignIn: React.FC = () => {
       setPassword('');
       router.push('/');
     } catch (error) {
+      setError('Invalid email or password. Please try again.');
       console.error(error, 'error');
     }
   };
@@ -35,7 +50,9 @@ const SignIn: React.FC = () => {
       </h2>
 
       {/* Gmail Button */}
-      <button className="w-full py-3 mb-6 bg-[#23856D] text-white font-medium rounded-md hover:bg-[#1d704b] flex items-center justify-center space-x-2">
+      <button
+        onClick={handleGoogleSignIn}
+        className="w-full py-3 mb-6 bg-[#23856D] text-white font-medium rounded-md hover:bg-[#1d704b] flex items-center justify-center space-x-2">
         <GoogleIcon />
         <span> Gmail</span>
       </button>
@@ -49,7 +66,8 @@ const SignIn: React.FC = () => {
 
       {/* Form */}
       <form onSubmit={handleSignIn} className="space-y-6">
-       
+        {error && <p className="text-red-500 text-center">{error}</p>}
+
         <ReusableInput
           label="Email Address *"
           id="email"
@@ -92,7 +110,7 @@ const SignIn: React.FC = () => {
           </a>
         </p>
       </div>
-     </div>
+    </div>
   );
 };
 

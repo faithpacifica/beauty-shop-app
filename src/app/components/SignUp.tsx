@@ -54,7 +54,7 @@ const SignUp: React.FC = () => {
         Try everything free for 30 days, no payment details required
       </p>
 
-{/* TODO:bu error message ni uchirib tashlash toastify quyish */}
+      {/* TODO:bu error message ni uchirib tashlash toastify quyish */}
       {errorMessage && (
         <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
       )}

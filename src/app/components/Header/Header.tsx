@@ -34,11 +34,12 @@ const Navbar: React.FC = () => {
   }, [windowWidth]);
 
   return (
-    <header className="min-h-8 w-full bg-white shadow-md relative">
-      <div className="container mx-auto flex items-center justify-between py-6 px-4 md:px-8">
+    <header className=" w-full bg-white shadow-md relative">
+      <div className="min-h-8 container mx-auto flex items-center justify-between py-6 px-4 md:px-8">
         {/* Left Section: Logo */}
         <div className="flex-shrink-0">
           <Link href="/">
+          {/* TODO:Image ni urniga SVG ga almashtirib, hoverda yashil rangli qilish */}
             <Image src={logo} width={75} height={35} alt="logo" />
           </Link>
         </div>
@@ -55,6 +56,7 @@ const Navbar: React.FC = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-8 text-[#737373]">
+          {/* TODO:mobile da hover paytida linklani rangi uzgarmayapti */}
           <Link href="/" className="hover:text-[#252B42]">Home</Link>
           <Link href="/shop" className="hover:text-[#252B42]">Shop</Link>
           <Link href="/about" className="hover:text-[#252B42]">About</Link>
@@ -82,9 +84,9 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Dropdown Menu */}
       {isOpen && (
-        <div className="fixed inset-0 bg-white flex flex-col z-50 transition-all duration-300 ease-in-out">
+        <div className=" fixed inset-0 bg-white flex flex-col z-50 transition-all duration-300 ease-in-out">
           {/* Mobile Header (Logo + Icons) */}
-          <div className="w-full flex justify-between items-center p-4 border-b shadow-md">
+          <div className="min-h-8 w-full flex justify-between items-center p-6  border-b shadow-md">
             <Link href="/">
               <Image src={logo} width={75} height={35} alt="logo" />
             </Link>
